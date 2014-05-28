@@ -52,7 +52,15 @@ namespace SiteCapture
 
             Application.DoEvents();
             this.Cursor = Cursors.WaitCursor;
-            webBrowser.Navigate(new Uri(Url)); //using the Uri overload seams to work better
+            try
+            {
+                webBrowser.Navigate(new Uri(Url)); //using the Uri overload seems to work better
+            }
+            catch (UriFormatException ufe)
+            {
+                webBrowser.Navigate(new Uri("http://" + Url)); //often the users will omit the protocol
+            }
+            
             Application.DoEvents();
         }
 
